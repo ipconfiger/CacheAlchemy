@@ -2,3 +2,7 @@
 CacheAlchemy/*.pyc
 tests/*.pyc
 .idea/*
+dist/*
+*.egg-info/*
+./build/*
+
