@@ -1,0 +1,4 @@
+*.pyc
+CacheAlchemy/*.pyc
+tests/*.pyc
+.idea/*
