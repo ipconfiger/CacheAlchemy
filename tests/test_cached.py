@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy import Column, Integer, String
 import redis
 
-engine = create_engine("postgresql+psycopg2://fiveddd:qdyqdyqdy@localhost/cache_test", convert_unicode=True, echo=True)
+engine = create_engine("postgresql+psycopg2://fiveddd@localhost/cache_test", convert_unicode=True, echo=True)
 db = scoped_session(sessionmaker(autocommit=False,
                                  autoflush=False,
                                  bind=engine,
