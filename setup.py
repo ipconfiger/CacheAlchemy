@@ -14,5 +14,6 @@ setup(name='CacheAlchemy',
       packages=['CacheAlchemy'],
       install_requires=[
           'sqlalchemy',
+          'redis',
       ],
       zip_safe=False)
