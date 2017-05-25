@@ -16,11 +16,9 @@ class RedisBackend(CacheBase):
         if expire:
             self.redis.expire(redis_key, expire)
 
-
     def clear(self, key):
         redis_key = "cached:key:%s" % key
         self.redis.delete(redis_key)
-
 
     def get_obj(self, key):
         redis_key = "cached:key:%s" % key
