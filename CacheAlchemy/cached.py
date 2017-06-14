@@ -70,6 +70,11 @@ class CachedQuery(object):
         self.query = self.query.order_by(*orders)
         return self
 
+    def __getitem__(self, item):
+        if type(item) == slice:
+            self.query = self.query[item.start: item.stop]
+        return self
+
     def all(self, expire=3600):
          for obj_id in self.query:
              yield cached_by_id(self.model, obj_id, expire=expire)

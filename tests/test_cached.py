@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy import Column, Integer, String
 import redis
 
-engine = create_engine("postgresql+psycopg2://fiveddd@localhost/cache_test", convert_unicode=True, echo=True)
+engine = create_engine("postgresql+psycopg2://liming@localhost/cache_test", convert_unicode=True, echo=True)
 db = scoped_session(sessionmaker(autocommit=False,
                                  autoflush=False,
                                  bind=engine,
@@ -50,25 +50,23 @@ class TestCached(TestCase):
         from CacheAlchemy import RedisBackend
         init_cached(db, RedisBackend(redis.Redis(host='127.0.0.1', port=6379, db=1)))
 
-        table = cached_by_id(TestTable, 2)
+        table = cached_by_id(TestTable, 1)
         table.name = "qqqq"
         db.flush()
         db.commit()
-        table1 = cached_by_id(TestTable, 2)
+        table1 = cached_by_id(TestTable, 1)
         table1.name = 'pppppppppppp'
         db.commit()
         self.assertTrue(True)
 
-    def test_cached_redis_backend_by_filter(self):
-        from CacheAlchemy import cached_by_condition, init_cached
+    def test_cached_query(self):
+        from CacheAlchemy import CachedQuery, init_cached
         from CacheAlchemy import RedisBackend
         init_cached(db, RedisBackend(redis.Redis(host='127.0.0.1', port=6379, db=1)))
 
-        table = cached_by_condition(TestTable, TestTable.id == 2)
-        table.name = "aaaa"
-        db.flush()
-        db.commit()
-        table1 = cached_by_condition(TestTable, TestTable.id == 2)
-        table1.name = 'bbbbb'
-        db.commit()
+        data = CachedQuery(TestTable).filter(TestTable.id > 0).order_by(TestTable.id.desc())[0:1].all()
+        print list(data)
         self.assertTrue(True)
+        
+
+
