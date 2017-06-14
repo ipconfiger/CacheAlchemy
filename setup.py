@@ -5,7 +5,7 @@ __author__ = 'liming'
 from setuptools import setup
 
 setup(name='CacheAlchemy',
-      version='0.0.1',
+      version='0.0.4',
       description='Cache SqlAlchemy entity to memory cache system',
       url='https://github.com/ipconfiger/CacheAlchemy',
       author='Alexander.Li',

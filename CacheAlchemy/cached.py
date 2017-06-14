@@ -55,3 +55,21 @@ def cached_by_id(model_class, _id, expire=3600):
             backend.clear('{}:{}'.format(str(target.__class__), target.id))
 
     return obj
+
+
+class CachedQuery(object):
+    def __init__(self, model_class):
+        self.model = model_class
+        self.query = db.query(model_class.id)
+
+    def filter(self, *conditions):
+        self.query = self.query.filter(*conditions)
+        return self
+
+    def order_by(self, *orders):
+        self.query = self.query.order_by(*orders)
+        return self
+
+    def all(self, expire=3600):
+         for obj_id in self.query:
+             yield cached_by_id(self.model, obj_id, expire=expire)
